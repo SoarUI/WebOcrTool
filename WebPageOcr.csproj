@@ -166,6 +166,8 @@
     <Compile Include="ScreenCaptureForm.Designer.cs">
       <DependentUpon>ScreenCaptureForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="tesseractSettings\IniFileHelper.cs" />
+    <Compile Include="tesseractSettings\itemHolder.cs" />
     <Compile Include="WebPageOcrForm.cs">
       <SubType>Form</SubType>
     </Compile>

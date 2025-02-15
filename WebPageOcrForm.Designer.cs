@@ -50,12 +50,12 @@ namespace WebPageOcr
             this.autoDetectRectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customerRectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chineseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.englishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.二值化方法ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thresholdOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thresholdTwoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainsplitContainer = new System.Windows.Forms.SplitContainer();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txbfx = new System.Windows.Forms.TextBox();
             this.txbfy = new System.Windows.Forms.TextBox();
@@ -64,18 +64,16 @@ namespace WebPageOcr
             this.ThresholdnumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.picroteright = new System.Windows.Forms.PictureBox();
             this.picroteleft = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.MainMenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainsplitContainer)).BeginInit();
             this.mainsplitContainer.Panel1.SuspendLayout();
             this.mainsplitContainer.Panel2.SuspendLayout();
             this.mainsplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThresholdnumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picroteright)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picroteleft)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // windowtitle
@@ -242,26 +240,11 @@ namespace WebPageOcr
             // 
             // languageToolStripMenuItem
             // 
-            this.languageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.chineseToolStripMenuItem,
-            this.englishToolStripMenuItem});
+           
             this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
             this.languageToolStripMenuItem.Size = new System.Drawing.Size(77, 21);
             this.languageToolStripMenuItem.Text = "Language";
-            // 
-            // chineseToolStripMenuItem
-            // 
-            this.chineseToolStripMenuItem.Name = "chineseToolStripMenuItem";
-            this.chineseToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
-            this.chineseToolStripMenuItem.Text = "chinese";
-            this.chineseToolStripMenuItem.Click += new System.EventHandler(this.chineseToolStripMenuItem_Click);
-            // 
-            // englishToolStripMenuItem
-            // 
-            this.englishToolStripMenuItem.Name = "englishToolStripMenuItem";
-            this.englishToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
-            this.englishToolStripMenuItem.Text = "english";
-            this.englishToolStripMenuItem.Click += new System.EventHandler(this.englishToolStripMenuItem_Click);
+            
             // 
             // 二值化方法ToolStripMenuItem
             // 
@@ -308,6 +291,33 @@ namespace WebPageOcr
             this.mainsplitContainer.Size = new System.Drawing.Size(1299, 626);
             this.mainsplitContainer.SplitterDistance = 588;
             this.mainsplitContainer.TabIndex = 18;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(586, 624);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 13;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.SizeChanged += new System.EventHandler(this.pictureBox2_SizeChanged);
+            this.pictureBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseDown);
+            this.pictureBox2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseMove);
+            this.pictureBox2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseUp);
+            this.pictureBox2.Resize += new System.EventHandler(this.pictureBox2_Resize);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(35, 235);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(638, 376);
+            this.pictureBox1.TabIndex = 15;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
             // 
             // label1
             // 
@@ -391,33 +401,6 @@ namespace WebPageOcr
             this.picroteleft.TabStop = false;
             this.picroteleft.Click += new System.EventHandler(this.picroteleft_Click);
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(586, 624);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 13;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.SizeChanged += new System.EventHandler(this.pictureBox2_SizeChanged);
-            this.pictureBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseDown);
-            this.pictureBox2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseMove);
-            this.pictureBox2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseUp);
-            this.pictureBox2.Resize += new System.EventHandler(this.pictureBox2_Resize);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(35, 235);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(638, 376);
-            this.pictureBox1.TabIndex = 15;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Visible = false;
-            // 
             // WebPageOcrForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -444,17 +427,18 @@ namespace WebPageOcr
             this.MainMenuStrip = this.MainMenuBar;
             this.Name = "WebPageOcrForm";
             this.Text = "ImageTranslator";
+            this.Load += new System.EventHandler(this.WebPageOcrForm_Load);
             this.MainMenuBar.ResumeLayout(false);
             this.MainMenuBar.PerformLayout();
             this.mainsplitContainer.Panel1.ResumeLayout(false);
             this.mainsplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainsplitContainer)).EndInit();
             this.mainsplitContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThresholdnumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picroteright)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picroteleft)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -480,8 +464,7 @@ namespace WebPageOcr
         private System.Windows.Forms.SplitContainer mainsplitContainer;
         private System.Windows.Forms.ToolStripMenuItem eDITToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem chineseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem englishToolStripMenuItem;
+       
         private System.Windows.Forms.ToolStripMenuItem saveStringsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem autoDetectRectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem customerRectToolStripMenuItem;

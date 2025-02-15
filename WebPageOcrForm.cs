@@ -28,6 +28,8 @@ using SixLabors.ImageSharp.Processing;
 using static NPOI.HSSF.Util.HSSFColor;
 using NPOI.HSSF.Record.CF;
 using NPOI.SS.Formula.Functions;
+using System.Collections.Specialized;
+using WebPageOcr.tesseractSettings;
 
 namespace WebPageOcr
 {
@@ -63,9 +65,11 @@ namespace WebPageOcr
         private List<OpenCvSharp.Point> PointList= new List<OpenCvSharp.Point>(); 
         Pen helppen=null;
         private int iLanguage =0;//english default
+        private string stringLanguage = null;//english default
         private double froteangle = 0.0f;
         private int iThrodMethod = 0;//english default
         private bool bPointListSorted = false;
+        private Dictionary<string, ItemHolder> languageItems = new Dictionary<string, ItemHolder>();
         public WebPageOcrForm()
         {
             InitializeComponent();
@@ -78,8 +82,6 @@ namespace WebPageOcr
             helppen = new Pen(Color.Black, 1);
             helppen.DashStyle = System.Drawing.Drawing2D.DashStyle.DashDot;
            
-            englishToolStripMenuItem.Checked = true;
-            chineseToolStripMenuItem.Checked = false;
             froteangle = 0.0f;
             ThresholdnumericUpDown.Value = 20;
             iThrodMethod = 0;
@@ -233,7 +235,7 @@ namespace WebPageOcr
                 else if(iThrodMethod ==1)
                 {
                     double dThreshold = (double)ThresholdnumericUpDown.Value;
-                    Cv2.Threshold(src, src, thresh- dThreshold, 255, ThresholdTypes.Binary);
+                    Cv2.Threshold(src, src, thresh - dThreshold, 255, ThresholdTypes.Binary);
                 }
                 //
                 
@@ -253,21 +255,13 @@ namespace WebPageOcr
         private void Ocr_reconize(Mat ma)
         {
             
-            if (ma == null)
+            if (ma == null || stringLanguage == null)
                 return;
             TesseractEngine ocr = null;
-            if (iLanguage == 1)
-            {
-                ocr = new TesseractEngine("./tessdata/", "chi_sim", EngineMode.Default);
-            }
-            else
-            {
-                ocr = new TesseractEngine("./tessdata/", "eng", EngineMode.Default);
-            }
+            ItemHolder ilang = languageItems[stringLanguage];
+            ocr = new TesseractEngine(ilang.datapath, ilang.languageName, EngineMode.Default);
             pictureBox1.Image = opcvFindPicture.Mat2Bitmap(ma);
             var page = ocr.Process(opcvFindPicture.Mat2Bitmap(ma));
-            
-            //var page = ocr.Process(Mat2Pix(final));
             this.richTextBox1.Text = page.GetText();
         }
         private void btnAutoFit_Click(object sender, EventArgs e)
@@ -855,18 +849,22 @@ namespace WebPageOcr
             }
         }
 
-        private void chineseToolStripMenuItem_Click(object sender, EventArgs e)
+      
+        private void LanguageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            iLanguage = 1;
-            englishToolStripMenuItem.Checked = false;
-            chineseToolStripMenuItem.Checked = true;
-        }
 
-        private void englishToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            iLanguage = 0;
-            englishToolStripMenuItem.Checked = true;
-            chineseToolStripMenuItem.Checked = false;
+            ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
+            stringLanguage = menuItem.Text;
+            ToolStripMenuItem parentItems = (ToolStripMenuItem)menuItem.OwnerItem;
+            foreach (var item in parentItems.DropDownItems)
+            {
+                ToolStripMenuItem tmpItem = (ToolStripMenuItem)item;
+                if (tmpItem != null)
+                {
+                    tmpItem.Checked = false;
+                }
+            }
+            menuItem.Checked = true;
         }
         private void autoDetectRectToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1056,6 +1054,31 @@ namespace WebPageOcr
             this.Show();
         }
 
-       
+        private void WebPageOcrForm_Load(object sender, EventArgs e)
+        {
+            LeeSharper.IniFileHelper IniHelper =
+                        new LeeSharper.IniFileHelper(System.Windows.Forms.Application.StartupPath + @"\tesssettings.ini");
+            NameValueCollection nameValueCollection = new NameValueCollection();
+            IniHelper.ReadSectionValues("lanuagesetting", nameValueCollection);
+            ToolStripMenuItem subMenu = (ToolStripMenuItem)MainMenuBar.Items["languageToolStripMenuItem"];
+            foreach (string item in nameValueCollection)
+            {
+                ItemHolder itemHolder = new ItemHolder();
+                itemHolder.Name = item;
+                string[] strings = nameValueCollection[item].Split(new char[] { ',' });
+                itemHolder.datapath = strings[1];
+                itemHolder.languageName = strings[0];
+                languageItems.Add(item, itemHolder);
+
+
+                ToolStripMenuItem newItem = new ToolStripMenuItem(item);
+                newItem.Name = item;
+                newItem.Size = new System.Drawing.Size(195, 22);
+                newItem.Text = item;
+                newItem.Tag = itemHolder.languageName;
+                newItem.Click += LanguageToolStripMenuItem_Click;
+                subMenu.DropDownItems.Add(newItem);
+            }
+        }
     }
 }
